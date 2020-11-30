@@ -15,5 +15,6 @@
 	<description>gqshop maven example using clean architecture hexagonal usecase pattern </description>
 	<modules>
 		<module>configurations</module>
+		<module>entrypoints</module>
 	</modules>
 </project>
