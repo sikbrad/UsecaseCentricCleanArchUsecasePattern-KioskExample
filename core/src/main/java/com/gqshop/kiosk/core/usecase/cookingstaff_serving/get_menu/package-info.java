@@ -1,0 +1,1 @@
+package com.gqshop.kiosk.core.usecase.cookingstaff_serving.get_menu;
