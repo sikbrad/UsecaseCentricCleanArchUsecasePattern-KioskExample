@@ -17,5 +17,6 @@
 		<module>configurations</module>
 		<module>entrypoints</module>
 		<module>core</module>
+		<module>dataproviders</module>
 	</modules>
 </project>
