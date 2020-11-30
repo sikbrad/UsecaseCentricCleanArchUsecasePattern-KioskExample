@@ -27,7 +27,7 @@ public class CustomerOrderingEntrypointRest implements CommandLineRunner{
 	}
 	
 	@GetMapping(value="/foodmenu")
-	public FoodMenuDto getFoodMenuList() {
+	public FoodMenuArrayDto getFoodMenuList() {
 		try {
 			Collection<FoodMenu> allFoodMenu = customerOrderingGetMenuUsecase.getAllMenu();
             return toDto(allFoodMenu);
@@ -41,8 +41,8 @@ public class CustomerOrderingEntrypointRest implements CommandLineRunner{
 		return null;
 	}
 
-	private FoodMenuDto toDto(Collection<FoodMenu> allFoodMenu) {
-		FoodMenuDto foodMenuDto = new FoodMenuDto(allFoodMenu);
+	private FoodMenuArrayDto toDto(Collection<FoodMenu> allFoodMenu) {
+		FoodMenuArrayDto foodMenuDto = new FoodMenuArrayDto(allFoodMenu);
 		return foodMenuDto;
 	}
 
