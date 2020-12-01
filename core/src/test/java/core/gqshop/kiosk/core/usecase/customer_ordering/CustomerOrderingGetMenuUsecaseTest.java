@@ -21,7 +21,9 @@ import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MenuNotFoundExce
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MultipleMenuFoundForSingleNameException;
 
 public class CustomerOrderingGetMenuUsecaseTest {
-
+	
+	FoodMenu fakeMenu = new FoodMenu("kimchi", "korean spicy dish");
+	
 	GetAllMenu getAllMenu = mock(GetAllMenu.class);
 	GetMenuDetail getMenuDetail = mock(GetMenuDetail.class);
 	CustomerOrderingGetMenuUsecase customerOrderingGetMenuUsecase = new CustomerOrderingGetMenuUsecase(getAllMenu,
@@ -40,28 +42,32 @@ public class CustomerOrderingGetMenuUsecaseTest {
 		assertThatExceptionOfType(MenuNotExistExcepion.class)
 				.isThrownBy(() -> customerOrderingGetMenuUsecase.getAllMenu());
 	}
+		
+	
 
 	@Test
 	public void returnsFoodMenuDetail() {
 		var expected = givenFoodMenuFound();
-		var actual = customerOrderingGetMenuUsecase.getMenuDetail("kimchi");
+		var actual = customerOrderingGetMenuUsecase.getMenuDetail(fakeMenu.getName());
 		assertThat(actual).isEqualTo(expected);
 	}
 
 	@Test
 	public void errorWhenMenuIsNotFound() throws Exception {
-		givenFoodMenuNotExist();
+		givenFoodMenuFound();
 		assertThatExceptionOfType(MenuNotFoundException.class)
-				.isThrownBy(() -> customerOrderingGetMenuUsecase.getMenuDetail("spatetti"));
+				.isThrownBy(() -> customerOrderingGetMenuUsecase.getMenuDetail("otherfood"));
 	}
 
 	@Test
 	public void errorWhenMultipleMenuIsFoundForOneName() throws Exception {
 		givenFoodMenuHaveMultipleMunoForOneName();
 		assertThatExceptionOfType(MultipleMenuFoundForSingleNameException.class)
-				.isThrownBy(() -> customerOrderingGetMenuUsecase.getMenuDetail("hamburger"));
+				.isThrownBy(() -> customerOrderingGetMenuUsecase.getMenuDetail(fakeMenu.getName()));
 	}
 
+	
+	
 
 	private void givenFoodMenuNotExist() {
 		when(getAllMenu.getAllFoodMenu()).thenReturn(new ArrayList<FoodMenu>());
@@ -69,24 +75,25 @@ public class CustomerOrderingGetMenuUsecaseTest {
 
 	private Collection<FoodMenu> givenFoodMenuExist() {
 		Collection<FoodMenu> expected = new ArrayList<FoodMenu>();
-		expected.add(new FoodMenu("spagetti", "italian noodle"));
+		expected.add(new FoodMenu(fakeMenu));
 		when(getAllMenu.getAllFoodMenu()).thenReturn(expected);
 		return expected;
 	}
 
 	private FoodMenu givenFoodMenuFound() {
 		Collection<FoodMenu> expected = new ArrayList<FoodMenu>();
-		expected.add(new FoodMenu("kimchi", "korean spicy something"));
+		expected.add(new FoodMenu(fakeMenu));
 		var fistone = expected.iterator().next();
-		when(getMenuDetail.searchWithFoodName("kimchi")).thenReturn(expected);
+		when(getMenuDetail.searchWithFoodName(fakeMenu.getName())).thenReturn(expected);
 		return fistone;
 	}
 
 	private void givenFoodMenuHaveMultipleMunoForOneName() {
 		Collection<FoodMenu> expected = new ArrayList<FoodMenu>();
-		expected.add(new FoodMenu("hamburger", ""));
-		expected.add(new FoodMenu("hamburger", "")); //dup
-		when(getMenuDetail.searchWithFoodName("hamburger")).thenReturn(expected);		
+		expected.add(new FoodMenu(fakeMenu));
+		expected.add(new FoodMenu(fakeMenu)); //dup
+		when(getMenuDetail.searchWithFoodName(fakeMenu.getName())).thenReturn(expected);		
 	}
 
+	
 }

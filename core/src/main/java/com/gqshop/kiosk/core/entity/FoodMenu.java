@@ -2,7 +2,7 @@ package com.gqshop.kiosk.core.entity;
 
 import java.util.UUID;
 
-public class FoodMenu {
+public class FoodMenu{
 	private UUID id;
 	private String name;
 	private String description;
@@ -34,6 +34,11 @@ public class FoodMenu {
 		this.name = name;
 		this.description = description;
 	}
-	
+	public FoodMenu(FoodMenu foodMenu) {
+		super();		
+		this.id = foodMenu.id;
+		this.name = foodMenu.name;
+		this.description = foodMenu.description;
+	}
 	
 }
