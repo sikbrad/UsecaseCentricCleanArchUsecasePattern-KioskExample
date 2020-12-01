@@ -15,7 +15,7 @@ public class DatabaseDataProviderConfiguration {
 		ArrayList<FoodMenu> foodMenu = new ArrayList<FoodMenu>();
 		
 		//putting data for source checking
-		foodMenu.add(new FoodMenu("soup", "homemade soup"));
+//		foodMenu.add(new FoodMenu("soup", "homemade soup"));
 		
 		return new FoodMenuDatabaseMockDataProvider(foodMenu);
 	}

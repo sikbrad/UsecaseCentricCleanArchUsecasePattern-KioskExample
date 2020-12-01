@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
-import com.gqshop.kiosk.core.usecase.cookingstaff_serving.get_menu.CustomerOrderingGetMenuUsecase;
-import com.gqshop.kiosk.core.usecase.cookingstaff_serving.get_menu.MenuNotExistExcepion;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.CustomerOrderingGetMenuUsecase;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MenuNotExistExcepion;
 
 @RestController
 @RequestMapping("/api")

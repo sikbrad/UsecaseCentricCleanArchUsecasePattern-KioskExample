@@ -38,12 +38,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.gqshop</groupId>
-			<artifactId>entrypoints</artifactId>
+			<artifactId>dataproviders</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.gqshop</groupId>
-			<artifactId>dataproviders</artifactId>
+			<artifactId>entrypoints</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
@@ -59,7 +59,7 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
-					<include>**/*.properties</include>					
+					<include>**/*.properties</include>
 					<include>**/*.html</include>
 				</includes>
 			</resource>
