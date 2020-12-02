@@ -12,6 +12,11 @@
 	<packaging>jar</packaging>
 	<description>core entity and usecases</description>
 
+	<properties>
+	    <maven.compiler.target>14</maven.compiler.target>
+	    <maven.compiler.source>14</maven.compiler.source>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -42,5 +47,6 @@
 		</dependency>
 
 	</dependencies>
+
 
 </project>

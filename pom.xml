@@ -13,6 +13,12 @@
 	<packaging>pom</packaging>
 	<name>gqshop-maven-example</name>
 	<description>gqshop maven example using clean architecture hexagonal usecase pattern </description>
+	
+	<properties>
+	    <maven.compiler.target>14</maven.compiler.target>
+	    <maven.compiler.source>14</maven.compiler.source>
+	</properties>
+	
 	<modules>
 		<module>configurations</module>
 		<module>entrypoints</module>
