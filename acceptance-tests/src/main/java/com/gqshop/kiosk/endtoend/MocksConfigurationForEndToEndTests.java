@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
 
-@Configuration
+//@Configuration
 public class MocksConfigurationForEndToEndTests {
 }
