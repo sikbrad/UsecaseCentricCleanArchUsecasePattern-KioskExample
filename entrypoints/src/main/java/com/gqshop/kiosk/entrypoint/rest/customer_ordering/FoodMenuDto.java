@@ -1,4 +1,4 @@
-package com.gqshop.kiosk.entrypoint.rest;
+package com.gqshop.kiosk.entrypoint.rest.customer_ordering;
 
 import java.util.UUID;
 

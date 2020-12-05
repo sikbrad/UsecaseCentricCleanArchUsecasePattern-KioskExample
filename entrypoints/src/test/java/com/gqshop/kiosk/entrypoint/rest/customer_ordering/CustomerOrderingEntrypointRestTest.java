@@ -1,4 +1,4 @@
-package com.gqshop.kiosk.entrypoint.rest;
+package com.gqshop.kiosk.entrypoint.rest.customer_ordering;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -12,6 +12,8 @@ import org.junit.Test;
 import com.gqshop.kiosk.core.entity.FoodMenu;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.CustomerOrderingGetFoodMenuUsecase;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.FoodMenuNotFoundException;
+import com.gqshop.kiosk.entrypoint.rest.customer_ordering.CustomerOrderingEntrypointRest;
+import com.gqshop.kiosk.entrypoint.rest.customer_ordering.FoodMenuDto;
 
 public class CustomerOrderingEntrypointRestTest {
 
