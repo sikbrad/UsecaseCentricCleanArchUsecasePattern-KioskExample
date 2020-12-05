@@ -28,7 +28,13 @@ public class CustomerOrderingGetFoodMenuUsecase {
     }
 
 	public FoodMenu getFoodMenuWithId(String id) {
-		FoodMenu foodMenu = getFoodMenuWithId.getWithId(UUID.fromString(id));
+		UUID uuid;
+		try {
+			uuid = UUID.fromString(id);
+		}catch (IllegalArgumentException ee) { //when non-uuid input
+			throw new FoodMenuNotFoundException();
+		}
+		FoodMenu foodMenu = getFoodMenuWithId.getWithId(uuid);
 		
 		if(foodMenu == null) {
 			throw new FoodMenuNotFoundException();

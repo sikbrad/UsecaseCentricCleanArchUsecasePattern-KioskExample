@@ -84,7 +84,7 @@ public class CustomerOrderingEntrypointRestIntegrationTest {
 	
 	
 	@Test
-	public void givenTwoMenu_whenGetFoodMenuWithId_thenReturnsOne() throws Exception {
+	public void givenTwoMenu_whenGetFoodMenuWithProperId_thenReturnsOne() throws Exception {
 		final String[] foodMenuNames = new String[] { "kimchi", "tongdak" };
 		givenFoodMenusExist(foodMenuNames);
 		
@@ -95,6 +95,7 @@ public class CustomerOrderingEntrypointRestIntegrationTest {
 				.andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(foodMenuIds.get(1))));
 	}
+
 	
 	private void givenFoodMenusExist(String[] foodNames) {
 		Collection<FoodMenu> foodMenuList = new ArrayList<FoodMenu>();
