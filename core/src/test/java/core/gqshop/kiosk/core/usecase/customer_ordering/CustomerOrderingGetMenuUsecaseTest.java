@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -21,8 +22,9 @@ import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MenuNotFoundExce
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MultipleMenuFoundForSingleNameException;
 
 public class CustomerOrderingGetMenuUsecaseTest {
-	
-	FoodMenu fakeMenu = new FoodMenu("kimchi", "korean spicy dish");
+
+//	FoodMenu fakeMenu = new FoodMenu("kimchi", "korean spicy dish");
+	FoodMenu fakeMenu = new FoodMenu(RandomString.make(), "korean spicy dish");
 	
 	GetAllMenu getAllMenu = mock(GetAllMenu.class);
 	GetMenuDetail getMenuDetail = mock(GetMenuDetail.class);

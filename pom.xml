@@ -18,7 +18,6 @@
 		<module>entrypoints</module>
 		<module>core</module>
 		<module>dataproviders</module>
-		<module>acceptance-tests</module>
 	</modules>
 	
 	
