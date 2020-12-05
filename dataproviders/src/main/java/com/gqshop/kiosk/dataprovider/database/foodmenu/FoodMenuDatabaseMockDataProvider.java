@@ -18,6 +18,9 @@ public class FoodMenuDatabaseMockDataProvider implements GetAllFoodMenu, GetFood
 	@Override
 	public FoodMenu getWithId(UUID id) {
 		Collection<FoodMenu> searchResult = foodMenuList.stream().filter(foodmenu -> foodmenu.getId().equals(id)).collect(Collectors.toList());
+		
+		if(searchResult.size() ==0) return null;
+		
 		return searchResult.iterator().next();
 	}
 

@@ -1,4 +1,4 @@
-package com.gqshop.kiosk.integration.rest.customer_ordering;
+package com.gqshop.kiosk.integration.database.customer_ordering;
 
 import static org.mockito.Mockito.mock;
 

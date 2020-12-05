@@ -1,1 +1,0 @@
-package com.gqshop.kiosk.integration.rest.customer_ordering;
