@@ -1,13 +1,14 @@
 package com.gqshop.kiosk.dataprovider.database.foodmenu;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
-import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.GetAllMenu;
-import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.GetMenuDetail;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.GetAllFoodMenu;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.GetFoodMenuWithId;
 
-public class FoodMenuDatabaseMockDataProvider implements GetAllMenu, GetMenuDetail {
+public class FoodMenuDatabaseMockDataProvider implements GetAllFoodMenu, GetFoodMenuWithId {
 	private Collection<FoodMenu> foodMenuList;
 
 	public FoodMenuDatabaseMockDataProvider(Collection<FoodMenu> foodMenuList) {
@@ -15,14 +16,25 @@ public class FoodMenuDatabaseMockDataProvider implements GetAllMenu, GetMenuDeta
 	}
 
 	@Override
-	public Collection<FoodMenu> getAllFoodMenu() {
-		return foodMenuList;
+	public FoodMenu getWithId(UUID id) {
+		Collection<FoodMenu> searchResult = foodMenuList.stream().filter(foodmenu -> foodmenu.getId().equals(id)).collect(Collectors.toList());
+		return searchResult.iterator().next();
 	}
 
 	@Override
-	public Collection<FoodMenu> searchWithFoodName(String foodname) {
-		Collection<FoodMenu> searchResult = foodMenuList.stream().filter(foodmenu -> foodmenu.getName().equals(foodname)).collect(Collectors.toList());
-		return searchResult;
+	public Collection<FoodMenu> getAll() {
+		return foodMenuList;
 	}
+
+//	@Override
+//	public Collection<FoodMenu> getAll() {
+//		return foodMenuList;
+//	}
+//
+//	@Override
+//	public Collection<FoodMenu> searchWithId(String foodname) {
+//		Collection<FoodMenu> searchResult = foodMenuList.stream().filter(foodmenu -> foodmenu.getName().equals(foodname)).collect(Collectors.toList());
+//		return searchResult;
+//	}
 
 }

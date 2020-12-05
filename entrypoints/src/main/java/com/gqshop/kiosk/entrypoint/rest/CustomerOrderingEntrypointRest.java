@@ -1,6 +1,7 @@
 package com.gqshop.kiosk.entrypoint.rest;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
-import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.CustomerOrderingGetMenuUsecase;
-import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MenuNotExistExcepion;
-import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MenuNotFoundException;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.CustomerOrderingGetFoodMenuUsecase;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.FoodMenuNotFoundException;
 
 @RestController
 @RequestMapping("/api")
 public class CustomerOrderingEntrypointRest implements CommandLineRunner{
 	
 	@Autowired
-	CustomerOrderingGetMenuUsecase customerOrderingGetMenuUsecase;
+	CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase;
 	
-	public CustomerOrderingEntrypointRest(CustomerOrderingGetMenuUsecase customerOrderingGetMenuUsecase) {
-		this.customerOrderingGetMenuUsecase = customerOrderingGetMenuUsecase;
+	public CustomerOrderingEntrypointRest(CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase) {
+		this.customerOrderingGetFoodMenuUsecase = customerOrderingGetFoodMenuUsecase;
 	}
 		
 	@GetMapping
@@ -33,25 +33,26 @@ public class CustomerOrderingEntrypointRest implements CommandLineRunner{
 	
 	@GetMapping(value="/foodmenu")
 	public Collection<FoodMenuDto> getFoodMenuList(){
-		try {
-			Collection<FoodMenu> allFoodMenu = customerOrderingGetMenuUsecase.getAllMenu();
-            return toDto(allFoodMenu);
-        } catch (MenuNotExistExcepion e) {
-//            System.out.println("no foodmenu exists");
-//            throw new MenuNotExistExcepion();
-//            return "{count:0}";
-        	return null;
-        }
-		
-//		return "API index called";
+		Collection<FoodMenu> allFoodMenu = customerOrderingGetFoodMenuUsecase.getAllFoodMenu();
+        return toDto(allFoodMenu);
+//		try {
+//			
+//        } catch (MenuNotExistExcepion e) {
+////            System.out.println("no foodmenu exists");
+////            throw new MenuNotExistExcepion();
+////            return "{count:0}";
+//        	return null;
+//        }
+//		
+////		return "API index called";
 //		return null;
 	}
 	
-	@GetMapping(value="/foodmenu/{foodname}")
-	public FoodMenuDto getFoodMenu(@PathVariable(value="foodname") String foodname) {
+	@GetMapping(value="/foodmenu/{id}")
+	public FoodMenuDto getFoodMenu(@PathVariable(value="id") String id) {
 		try {
-			return toDto(customerOrderingGetMenuUsecase.getMenuDetail(foodname));	
-		}catch(MenuNotFoundException ee) {
+			return toDto(customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(id));	
+		}catch(FoodMenuNotFoundException ee) {
 			return null;
 		}		
 	}

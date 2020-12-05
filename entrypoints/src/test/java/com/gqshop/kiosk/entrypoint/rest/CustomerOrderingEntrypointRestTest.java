@@ -1,31 +1,25 @@
 package com.gqshop.kiosk.entrypoint.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.h2.store.fs.FakeFileChannel;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
-import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.CustomerOrderingGetMenuUsecase;
-import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MenuNotExistExcepion;
-import com.gqshop.kiosk.core.usecase.customer_ordering.get_menu.MenuNotFoundException;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.CustomerOrderingGetFoodMenuUsecase;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.FoodMenuNotFoundException;
 
 public class CustomerOrderingEntrypointRestTest {
 
 	FoodMenu fakeMenu1 = new FoodMenu("kimchi", "korean spicy dish");
-	FoodMenu fakeMenu2 = new FoodMenu("tongdak", "korean chicken dish");
+//	FoodMenu fakeMenu2 = new FoodMenu("tongdak", "korean chicken dish");
 	
-	CustomerOrderingGetMenuUsecase customerOrderingGetMenuUsecase = mock(CustomerOrderingGetMenuUsecase.class);	
-    CustomerOrderingEntrypointRest customerOrderingEntrypointRest = new CustomerOrderingEntrypointRest(customerOrderingGetMenuUsecase); 
+	CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase = mock(CustomerOrderingGetFoodMenuUsecase.class);	
+    CustomerOrderingEntrypointRest customerOrderingEntrypointRest = new CustomerOrderingEntrypointRest(customerOrderingGetFoodMenuUsecase); 
 	
 	@Test
 	public void returnsAllFoodMenu() throws Exception{
@@ -51,11 +45,11 @@ public class CustomerOrderingEntrypointRestTest {
 //				() -> customerOrderingEntrypointRest.getFoodMenuList()
 //		);
 //	}
-	@Test
-	public void returnNullWhenNoFoodMenuExist() throws Exception{
-		givenFoodMenuNotExist();
-		assertThat(customerOrderingEntrypointRest.getFoodMenuList()).isEqualTo(null);
-	}
+//	@Test
+//	public void returnNullWhenNoFoodMenuExist() throws Exception{
+//		givenFoodMenuNotExist();
+//		assertThat(customerOrderingEntrypointRest.getFoodMenuList()).isEqualTo(null);
+//	}
 	
 	@Test
 	public void returnNullWhenNoFoodMenuFound() throws Exception{
@@ -71,16 +65,16 @@ public class CustomerOrderingEntrypointRestTest {
 //		);
 //	}
 
-	private void givenFoodMenuNotExist() {
-		when(customerOrderingGetMenuUsecase.getAllMenu()).thenThrow(new MenuNotExistExcepion());
-	}
+//	private void givenFoodMenuNotExist() {
+//		when(customerOrderingGetFoodMenuUsecase.getAllFoodMenu()).thenThrow(new MenuNotExistExcepion());
+//	}
 
 	private void givenOneMenuExists() {
 		Collection<FoodMenu> foodMenuList = new ArrayList<FoodMenu>();
 		foodMenuList.add(fakeMenu1);
-		when(customerOrderingGetMenuUsecase.getAllMenu()).thenReturn(foodMenuList);		
-		when(customerOrderingGetMenuUsecase.getMenuDetail(fakeMenu1.getName())).thenReturn(fakeMenu1);
-		when(customerOrderingGetMenuUsecase.getMenuDetail("not a food")).thenThrow(new MenuNotFoundException());
+		when(customerOrderingGetFoodMenuUsecase.getAllFoodMenu()).thenReturn(foodMenuList);		
+		when(customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(fakeMenu1.getName())).thenReturn(fakeMenu1);
+		when(customerOrderingGetFoodMenuUsecase.getFoodMenuWithId("not a food")).thenThrow(new FoodMenuNotFoundException());
 	}
 
 }
