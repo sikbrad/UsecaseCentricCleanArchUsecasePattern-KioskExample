@@ -24,5 +24,25 @@
 		<module>entrypoints</module>
 		<module>core</module>
 		<module>dataproviders</module>
+		<module>integration-tests</module>
 	</modules>
+	
+	
+	<repositories>
+		<!-- yatspec -->
+		<repository>
+			<id>http://repo.bodar.com/</id>
+			<url>http://repo.bodar.com/</url>
+		</repository>
+		<!-- default -->
+		<repository>
+			<id>central</id>
+			<name>Default Repository</name>
+			<layout>default</layout>
+			<url>https://repo1.maven.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>
