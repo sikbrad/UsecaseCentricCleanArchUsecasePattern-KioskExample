@@ -3,7 +3,7 @@ package com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu;
 import java.util.Collection;
 import java.util.UUID;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
 
