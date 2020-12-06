@@ -32,9 +32,6 @@ import com.gqshop.kiosk.core.entity.FoodMenu;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.CustomerOrderingGetFoodMenuUsecase;
 import com.gqshop.kiosk.dataprovider.database.foodmenu.FoodMenuDatabaseMockDataProvider;
 
-//@RunWith(SpringRunner.class)
-//@WebMvcTest(CustomerOrderingEntrypointRest.class)
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
@@ -106,7 +103,6 @@ public class CustomerOrderingEntrypointRestIntegrationTest {
 		try {
 			FieldUtils.writeDeclaredField(foodMenuDatabaseMockDataProvider, "foodMenuList", foodMenuList, true);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

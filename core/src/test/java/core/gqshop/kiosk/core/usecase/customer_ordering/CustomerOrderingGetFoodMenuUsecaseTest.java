@@ -32,7 +32,6 @@ public class CustomerOrderingGetFoodMenuUsecaseTest {
 	public void returnAllFoodMenu() {
 		Collection<FoodMenu> expected = givenSomeFoodMenuFound();
 		Collection<FoodMenu> actual = customerOrderingGetFoodMenuUsecase.getAllFoodMenu();
-//		assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
 		assertThat(actual.size()).isEqualTo(expected.size());
 	}
 
@@ -50,23 +49,6 @@ public class CustomerOrderingGetFoodMenuUsecaseTest {
 				.isThrownBy(() -> customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(fakeUuid2.toString()));
 	}
 
-//	@Test
-//	public void errorWhenMultipleMenuIsFoundForOneName() throws Exception {
-//		givenFoodMenuHaveMultipleMunoForOneName();
-//		assertThatExceptionOfType(MultipleMenuFoundForSingleNameException.class)
-//				.isThrownBy(() -> customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(fakeMenu.getName()));
-//	}
-//	private void givenFoodMenuNotExist() {
-//		when(getAllFoodMenu.getAllFoodMenu()).thenReturn(new ArrayList<FoodMenu>());
-//	}
-
-//	private Collection<FoodMenu> givenOneFoodMenuFound() {
-//		Collection<FoodMenu> expected = new ArrayList<FoodMenu>();
-//		expected.add(new FoodMenu(fakeMenu));
-//		when(getAllFoodMenu.getAllFoodMenu()).thenReturn(expected);
-//		return expected;
-//	}
-
 	private Collection<FoodMenu> givenSomeFoodMenuFound() {
 		Collection<FoodMenu> expected = new ArrayList<FoodMenu>();
 		expected.add(new FoodMenu(fakeMenu));
@@ -79,14 +61,6 @@ public class CustomerOrderingGetFoodMenuUsecaseTest {
 	
 	private FoodMenu givenOneFoodMenuFound() {
 		FoodMenu expected = new FoodMenu(fakeMenu);
-//		Collection<FoodMenu> expected = new ArrayList<FoodMenu>();
-//		expected.add(new FoodMenu(fakeMenu));
-//		var fistone = expected.iterator().next();
-//		when(getFoodMenuWithId.getFoodMenuWithId(fakeMenu.getName())).thenReturn(expected);
-//		return fistone;
-		
-//		when(getFoodMenuWithId.getFoodMenuWithId(fakeMenu.getName()))
-//		when(getAllFoodMenu.getAll()).thenReturn(expected);
 		when(getFoodMenuWithId.getWithId(fakeMenu.getId())).thenReturn(expected);
 		
 		return expected;
@@ -95,12 +69,5 @@ public class CustomerOrderingGetFoodMenuUsecaseTest {
 	private void givenNoFoodMenuFound(){
 		when(getFoodMenuWithId.getWithId(fakeUuid2)).thenThrow(new FoodMenuNotFoundException());
 	}
-
-//	private void givenFoodMenuHaveMultipleMunoForOneName() {
-//		Collection<FoodMenu> expected = new ArrayList<FoodMenu>();
-//		expected.add(new FoodMenu(fakeMenu));
-//		expected.add(new FoodMenu(fakeMenu)); // dup
-//		when(getFoodMenuWithId.getFoodMenuWithId(fakeMenu.getName())).thenReturn(expected);
-//	}
 
 }

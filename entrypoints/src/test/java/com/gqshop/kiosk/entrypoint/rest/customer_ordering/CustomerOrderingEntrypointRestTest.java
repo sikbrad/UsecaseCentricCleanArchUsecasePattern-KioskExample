@@ -18,7 +18,6 @@ import com.gqshop.kiosk.entrypoint.rest.customer_ordering.FoodMenuDto;
 public class CustomerOrderingEntrypointRestTest {
 
 	FoodMenu fakeMenu1 = new FoodMenu("kimchi", "korean spicy dish");
-//	FoodMenu fakeMenu2 = new FoodMenu("tongdak", "korean chicken dish");
 	
 	CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase = mock(CustomerOrderingGetFoodMenuUsecase.class);	
     CustomerOrderingEntrypointRest customerOrderingEntrypointRest = new CustomerOrderingEntrypointRest(customerOrderingGetFoodMenuUsecase); 
@@ -39,38 +38,13 @@ public class CustomerOrderingEntrypointRestTest {
 		assertThat(foodMenuDto.getName()).isEqualTo(fakeMenu1.getName());
 		assertThat(foodMenuDto.getDescription()).isEqualTo(fakeMenu1.getDescription());		
 	}
-	
-//	@Test
-//	public void errorWhenNoFoodMenuExist() throws Exception{
-//		givenFoodMenuNotExist();
-//		assertThatExceptionOfType(MenuNotExistExcepion.class).isThrownBy(
-//				() -> customerOrderingEntrypointRest.getFoodMenuList()
-//		);
-//	}
-//	@Test
-//	public void returnNullWhenNoFoodMenuExist() throws Exception{
-//		givenFoodMenuNotExist();
-//		assertThat(customerOrderingEntrypointRest.getFoodMenuList()).isEqualTo(null);
-//	}
-	
+		
 	@Test
 	public void returnNullWhenNoFoodMenuFound() throws Exception{
 		givenOneMenuExists();
 		assertThat(customerOrderingEntrypointRest.getFoodMenu("not a food")).isEqualTo(null);
 	}
 	
-//	@Test
-//	public void errorWhenNoFoodMenuFound() throws Exception{
-//		givenFoodMenuNotExist();
-//		assertThatExceptionOfType(MenuNotFoundException.class).isThrownBy(
-//				() -> customerOrderingEntrypointRest.getFoodMenu("not a food")
-//		);
-//	}
-
-//	private void givenFoodMenuNotExist() {
-//		when(customerOrderingGetFoodMenuUsecase.getAllFoodMenu()).thenThrow(new MenuNotExistExcepion());
-//	}
-
 	private void givenOneMenuExists() {
 		Collection<FoodMenu> foodMenuList = new ArrayList<FoodMenu>();
 		foodMenuList.add(fakeMenu1);
