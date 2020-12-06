@@ -1,5 +1,7 @@
 package com.gqshop.kiosk.entrypoint.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
@@ -14,23 +16,16 @@ public class CustomerOrderingEntrypointWeb implements CommandLineRunner{
 	@Autowired
 	Environment env;
 	
-//	@RequestMapping("/home")
-//	public String homePage(){
-//		System.out.println("entered home web");
-//		System.out.println(String.format("With profile of : %s", env.getProperty("gqshop.propertyname")));
-//		return "index";
-//	}
+
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	
 	@RequestMapping("/home")
-	public String homePage(Model model){
-//		System.out.println("entered home web");
-//		System.out.println(String.format("With profile of : %s", env.getProperty("gqshop.propertyname")));
-//		return "index";
-		
+	public String homePage(Model model){		
 		String currProfiles = String.join(",", env.getActiveProfiles());
 		if(currProfiles.length() == 0) {
 			currProfiles = "(profile undecided - it is set as default)";
-		}
-		
+		}		
 		model.addAttribute("profile", currProfiles);
 		return "home";
 	}
@@ -38,14 +33,14 @@ public class CustomerOrderingEntrypointWeb implements CommandLineRunner{
 	
 	@GetMapping("/")
 	public String index(Model model) {		
-		System.out.println("entered index web");
+		logger.info("entered index web");
 		return "redirect:home";
 	}
 
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("CustomerOrderingEntrypointWeb bean created");
+		logger.info("CustomerOrderingEntrypointWeb bean created");
 		
 	}
 }

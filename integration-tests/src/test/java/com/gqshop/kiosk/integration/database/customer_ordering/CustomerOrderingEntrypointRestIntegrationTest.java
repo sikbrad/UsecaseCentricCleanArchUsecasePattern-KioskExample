@@ -38,6 +38,8 @@ import com.gqshop.kiosk.dataprovider.database.foodmenu.FoodMenuDatabaseMockDataP
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
 public class CustomerOrderingEntrypointRestIntegrationTest {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	FoodMenuDatabaseMockDataProvider foodMenuDatabaseMockDataProvider;
 
@@ -54,7 +56,7 @@ public class CustomerOrderingEntrypointRestIntegrationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		System.out.println("called test setup");
+		logger.info("called test setup");
 
 		apiUrl = String.format("http://localhost:%s/api", env.getProperty("server.port"));
 

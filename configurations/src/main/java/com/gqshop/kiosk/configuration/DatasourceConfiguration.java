@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +20,12 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 @Configuration
 public class DatasourceConfiguration {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Bean
 	public DataSource dataSource() throws IOException {
 		// @ref https://www.baeldung.com/spring-boot-configure-data-source-programmatic
-		System.out.println("calling datasource creation");
+		logger.debug("dataSource bean created");
 		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.driverClassName("org.h2.Driver");//      
 		dataSourceBuilder.url("jdbc:h2:mem:testdb");

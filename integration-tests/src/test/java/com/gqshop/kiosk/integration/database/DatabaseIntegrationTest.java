@@ -15,13 +15,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
 public class DatabaseIntegrationTest {
-	
+
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private Environment env;
 	
 	@Test
 	public void runsomething() {
-		System.out.println(String.format("Property mode : %s", env.getProperty("gqshop.propertyname")));
+		logger.info(String.format("Property mode : %s", env.getProperty("spring.profiles")));
 		assert(true);
 	}
 }
