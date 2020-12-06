@@ -30,16 +30,16 @@ public class CustomerOrderingGetFoodMenuUsecaseTest {
 
 	@Test
 	public void returnAllFoodMenu() {
-		var expected = givenSomeFoodMenuFound();
-		var actual = customerOrderingGetFoodMenuUsecase.getAllFoodMenu();
+		Collection<FoodMenu> expected = givenSomeFoodMenuFound();
+		Collection<FoodMenu> actual = customerOrderingGetFoodMenuUsecase.getAllFoodMenu();
 //		assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
 		assertThat(actual.size()).isEqualTo(expected.size());
 	}
 
 	@Test
 	public void returnsFoodMenuWithId() {
-		var expected = givenOneFoodMenuFound();
-		var actual = customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(fakeMenu.getId().toString());
+		FoodMenu expected = givenOneFoodMenuFound();
+		FoodMenu actual = customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(fakeMenu.getId().toString());
 		assertThat(actual.getId()).isEqualTo(expected.getId());
 	}
 
