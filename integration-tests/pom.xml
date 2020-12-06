@@ -13,6 +13,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.gqshop</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gqshop</groupId>
 			<artifactId>dataproviders</artifactId>
 			<version>1.0.0</version>
 		</dependency>
