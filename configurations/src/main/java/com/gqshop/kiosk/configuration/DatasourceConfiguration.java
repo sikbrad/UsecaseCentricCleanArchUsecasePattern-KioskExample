@@ -42,8 +42,12 @@ public class DatasourceConfiguration {
       // schema init
       //@ref https://stackoverflow.com/a/41873743
       Resource initSchema = new ClassPathResource("/database/h2/create.sql");
-      DatabasePopulator databasePopulator = new ResourceDatabasePopulator(initSchema);
-      DatabasePopulatorUtils.execute(databasePopulator, dataSource);
+      DatabasePopulator databaseInitPopulator = new ResourceDatabasePopulator(initSchema);
+      DatabasePopulatorUtils.execute(databaseInitPopulator, dataSource);
+      
+      Resource dataSchema = new ClassPathResource("/database/h2/data.sql");
+      DatabasePopulator databaseDataPopulator = new ResourceDatabasePopulator(dataSchema);
+      DatabasePopulatorUtils.execute(databaseDataPopulator, dataSource);
       
       return dataSource;
   }
