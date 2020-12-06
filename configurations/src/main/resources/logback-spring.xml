@@ -1,17 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 	<include
-	resource="org/springframework/boot/logging/logback/default.xml" />
+		resource="org/springframework/boot/logging/logback/default.xml" />
 	<include
 		resource="org/springframework/boot/logging/logback/console-appender.xml" />
 	<property name="LOG_FILE"
-		value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}" />	
-	
+		value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}" />
+
 	<logger name="org.springframework.web" level="DEBUG" />
-	
+	<logger name="org.springframework.web" level="DEBUG" />
+
 	<root level="DEBUG">
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="FILE" />
 	</root>
-	
+
+	<logger name="org.springframework.jdbc.core.JdbcTemplate">
+		<level value="debug" />
+	</logger>
+
+	<logger
+		name="org.springframework.jdbc.core.StatementCreatorUtils">
+		<level value="debug" />
+	</logger>
+
 </configuration>
