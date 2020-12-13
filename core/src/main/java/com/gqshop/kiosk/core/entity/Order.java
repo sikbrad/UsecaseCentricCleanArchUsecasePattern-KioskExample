@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public class Order {
 	private UUID id;
-	private UUID idCustomer;	
 	private OrderStatus orderStatus;
 	private int orderNumber; 
 	
@@ -13,12 +12,6 @@ public class Order {
 	}
 	public void setId(UUID id) {
 		this.id = id;
-	}
-	public UUID getIdCustomer() {
-		return idCustomer;
-	}
-	public void setIdCustomer(UUID idCustomer) {
-		this.idCustomer = idCustomer;
 	}
 	public OrderStatus getOrderStatus() {
 		return orderStatus;
@@ -32,5 +25,18 @@ public class Order {
 	public void setOrderNumber(int orderNumber) {
 		this.orderNumber = orderNumber;
 	}
+	public Order(UUID id, OrderStatus orderStatus, int orderNumber) {
+		super();
+		this.id = id;
+		this.orderStatus = orderStatus;
+		this.orderNumber = orderNumber;
+	}
+	public Order(OrderStatus orderStatus, int orderNumber) {
+		super();
+		this.id = UUID.randomUUID();
+		this.orderStatus = orderStatus;
+		this.orderNumber = orderNumber;
+	}
 		
+	
 }

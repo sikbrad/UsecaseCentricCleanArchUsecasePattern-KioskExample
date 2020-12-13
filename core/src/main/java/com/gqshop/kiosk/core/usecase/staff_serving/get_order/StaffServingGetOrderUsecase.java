@@ -1,83 +1,61 @@
 package com.gqshop.kiosk.core.usecase.staff_serving.get_order;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.UUID;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
 import com.gqshop.kiosk.core.entity.Order;
-import com.gqshop.kiosk.core.valueobject.OrderHasFoodMenu;
 
 public class StaffServingGetOrderUsecase {
 	private final GetReceivedOrders getReceivedOrders;
-	private final GetFoodMenuWithOrderId getFoodMenuOfOrder;
-	private final GetOrderHasFoodMenuWithOrderId getOrderHasFoodMenuWithOrderId;
-	private final GetFoodMenuWithId getFoodMenuWithId; 
+	private final GetFoodMenuWithOrderId getFoodMenuWithOrderId;
 
-	public GetFoodMenuWithId getGetFoodMenuWithId() {
-		return getFoodMenuWithId;
+	private GetFoodMenuWithOrderId getFoodMenuWithOrderId() {
+		return getFoodMenuWithOrderId;
 	}
 
-	public GetOrderHasFoodMenuWithOrderId getGetOrderHasFoodMenuWithOrderId() {
-		return getOrderHasFoodMenuWithOrderId;
-	}
-
-	public GetFoodMenuWithOrderId getGetFoodMenuOfOrder() {
-		return getFoodMenuOfOrder;
-	}
-
-	public GetReceivedOrders getGetReceivedOrders() {
+	private GetReceivedOrders getGetReceivedOrders() {
 		return getReceivedOrders;
 	}
 
-	public StaffServingGetOrderUsecase(GetReceivedOrders getReceivedOrders, GetFoodMenuWithOrderId getFoodMenuOfOrder, GetOrderHasFoodMenuWithOrderId getOrderHasFoodMenuWithOrderId, GetFoodMenuWithId getFoodMenuWithId) {
+	public StaffServingGetOrderUsecase(GetReceivedOrders getReceivedOrders, GetFoodMenuWithOrderId getFoodMenuOfOrder) {
 		super();
 		this.getReceivedOrders = getReceivedOrders;
-		this.getFoodMenuOfOrder = getFoodMenuOfOrder;
-		this.getOrderHasFoodMenuWithOrderId = getOrderHasFoodMenuWithOrderId;
-		this.getFoodMenuWithId = getFoodMenuWithId;
+		this.getFoodMenuWithOrderId = getFoodMenuOfOrder;
 	}
-	
+
 	public Collection<FoodMenu> getFoodMenuWithOrderId(String orderId) {
+
+		// test for oder existence
 		Collection<Order> receivedOrders = getReceivedOrders.getReceivedOrders();
-		
 		Iterator<Order> iterator = receivedOrders.iterator();
 		Order order = null;
-	    while (iterator.hasNext()) {
-	        Order examinee = iterator.next();
-	        if (examinee.getId().equals(orderId)) {
-	            order = examinee;
-	            break;
-	        }
-	    }
-		
-		if(order == null) {
+		while (iterator.hasNext()) {
+			Order examinee = iterator.next();
+			if (examinee.getId().toString().equals(orderId)) {
+				order = examinee;
+				break;
+			}
+		}
+
+		if (order == null) {
 			throw new OrderNotFoundException();
 		}
-		
-		//relation
-		Collection<OrderHasFoodMenu> orderHasFoodMenuList = getOrderHasFoodMenuWithOrderId.getOrderHasFoodMenuWithOrderId(orderId);
-		
-		if(orderHasFoodMenuList.size() == 0) {
+
+		// getting food menus in order
+		Collection<FoodMenu> foodmenusOfOrder = getFoodMenuWithOrderId.getFoodMenuWithOrderId(orderId);
+
+		if (foodmenusOfOrder.size() == 0) {
 			throw new FoodMenuNotFoundInOrderException();
 		}
-		
-		Collection<FoodMenu> foodMenuOfOrder = new ArrayList<FoodMenu>();
-		Iterator<OrderHasFoodMenu> iterator2 = orderHasFoodMenuList.iterator();
-	    while (iterator2.hasNext()) {
-	    	OrderHasFoodMenu examinee = iterator2.next();	    	
-	    	foodMenuOfOrder.add(getFoodMenuWithId.getWithId(examinee.getIdFoodMenu().toString()));	    	
-	    }
-	    
-	    return foodMenuOfOrder;
+
+		return foodmenusOfOrder;
 	}
-	
-	public Collection<Order> getReceivedOrders(){
-		//get orders that not started cooking
+
+	public Collection<Order> getReceivedOrders() {
+		// get orders that not started cooking
 		Collection<Order> receivedOrders = getReceivedOrders.getReceivedOrders();
 		return receivedOrders;
 	}
-	
-	
+
 }
