@@ -6,62 +6,75 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<style>
-		img#foodMenuImage{
-			width: 300px;
+
+		table{
+			max-width:400px;
+		}
+		th {
+			font-weight: 900;
+			width:10%;
+			text-align: center;
+		}
+		td {
+			text-align: center;
+			width:10%;
 		}
 	</style>
 </head>
 
 <body>
 	<h5>Welcome to GqShop</h5>
-	<h2 id="foodMenuName">FOOD NAME</h2>
-	<image id="foodMenuImage"></image>
-	<h5 id="foodMenuDescription">description</h5>
-	
+	<h2>Menu</h2>
+	<div>
+		<table id="foodmenu_table">
+			<thead>
+				<tr>
+					<th>Index</th>
+					<th>Name</th>
+				</tr>
+			</thead>
 
-	<!-- <h5>dbg info</h5>
-	<p>Profile : <span th:text="${foodMenuUuid}">-POPULATE-</span></p> -->
-	<p>EOF</p>
+			<tbody>
+				<tr>
+					<td>idx</td>
+					<td>dummy name</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+
 </body>
 
 <script>
-	var foodMenuUuid = "[[${foodMenuUuid}]]";
 	window.onload = function () {
 		console.log("loading foodmenu..");
-		var apiFoodMenu =`/api/foodmenu/${foodMenuUuid}`; 
+		var apiFoodMenu ='/api/foodmenu'; 
 		$.ajax({
 			url: apiFoodMenu,
 			success: function (data) {
 
-				console.log(data)
-
-				$("#foodMenuName").text(data.name)
-				$("#foodMenuDescription").text(data.description)
-				$("#foodMenuImage").attr("src",data.imageUrl)
-
 				//rem all rows except for th
-				// $("#foodmenu_table tbody tr").remove();
+				$("#foodmenu_table tbody tr").remove();
 
-				// //populate the data
-				// var foodMenuTbody = $("#foodmenu_table tbody")[0];
-				// var foodMenuList = data;
-				// var tbText = ``;
-				// for (var idx = 0; idx < foodMenuList.length; idx++) {
-				// 	var foodMenu = foodMenuList[idx];
-				// 	console.log(foodMenu);
+				//populate the data
+				var foodMenuTbody = $("#foodmenu_table tbody")[0];
+				var foodMenuList = data;
+				var tbText = ``;
+				for (var idx = 0; idx < foodMenuList.length; idx++) {
+					var foodMenu = foodMenuList[idx];
+					console.log(foodMenu);
 
-				// 	tbText += `
-				// 		<tr>
-				// 			<td>${idx + 1}</td>
-				// 			<td>${foodMenu.name}</td>
-				// 			<td>${foodMenu.description}</td>
-				// 			<td><a href='food_menu/${foodMenu.id}'>LINK</a></td>
-				// 		</tr>
-				// 		`;
-				// }
-				// foodMenuTbody.innerHTML = tbText;
+					tbText += `
+						<tr>
+							<td>${idx + 1}</td>		
+							<td><a href='food_menu/${foodMenu.id}'>${foodMenu.name}</a></td>
+						</tr>
+						`;
+				}
+				foodMenuTbody.innerHTML = tbText;
 
-				// console.log(data);
+				console.log(data);
 			}
 		})
 	}

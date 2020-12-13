@@ -37,11 +37,30 @@ public class CustomerOrderingEntrypointWeb implements CommandLineRunner{
 		logger.info("entered index web");
 		return "redirect:home";
 	}
+	
 
-	@GetMapping("/food_menu/{foodMenuUuid}")
+	@GetMapping("/customer")
+	public String customer_view(Model model) {		
+		logger.info("entered customer_view web");
+		return "customer_view";
+	}	
+
+	@GetMapping("/customer/food_menu")
+	public String food_menu(Model model) {		
+		return "food_menu";
+	}
+
+	@GetMapping("/customer/food_menu/{foodMenuUuid}")
 	public String index(@PathVariable(required=true,name="foodMenuUuid") String foodMenuUuid, Model model) {
 		model.addAttribute("foodMenuUuid", foodMenuUuid);
-		return "food_menu";
+		return "food_menu_detail";
+	}
+	
+
+	@GetMapping("/staff")
+	public String staff_view(Model model) {		
+		logger.info("entered staff_view web");
+		return "staff_view";
 	}
 
 	@Override
