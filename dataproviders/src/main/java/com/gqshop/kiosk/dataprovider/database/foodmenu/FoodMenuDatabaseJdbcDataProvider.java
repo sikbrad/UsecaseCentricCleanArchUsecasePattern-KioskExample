@@ -23,7 +23,7 @@ public class FoodMenuDatabaseJdbcDataProvider implements GetAllFoodMenu, GetFood
 	@Override
 	public FoodMenu getWithId(UUID id) {
 		
-		FoodMenu foodMenu = jdbcTemplate.queryForObject("SELECT id,name,description FROM GQSHOP.FOOD_MENU WHERE id = ?", rowMapper, id.toString());
+		FoodMenu foodMenu = jdbcTemplate.queryForObject("SELECT id,name,description,image_url FROM GQSHOP.FOOD_MENU WHERE id = ?", rowMapper, id.toString());
 		return foodMenu;
 	}
 	
@@ -33,15 +33,16 @@ public class FoodMenuDatabaseJdbcDataProvider implements GetAllFoodMenu, GetFood
 		UUID id = UUID.fromString(rs.getString(1));
 		String name = rs.getString(2);
 		String description = rs.getString(3);
+		String imageUrl = rs.getString(4);
 		
-		FoodMenu foodMenu = new FoodMenu(id, name, description);
+		FoodMenu foodMenu = new FoodMenu(id, name, description, imageUrl);
 		return foodMenu;
 		
 	};
 	
 	@Override
 	public Collection<FoodMenu> getAll() {		
-		return jdbcTemplate.query("SELECT id,name,description FROM GQSHOP.FOOD_MENU ", rowMapper);
+		return jdbcTemplate.query("SELECT id,name,description,image_url FROM GQSHOP.FOOD_MENU ", rowMapper);
 	}
 
 }

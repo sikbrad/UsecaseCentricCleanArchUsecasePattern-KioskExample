@@ -102,7 +102,7 @@ public class CustomerOrderingEntrypointRestIntegrationTest {
 		Collection<FoodMenu> foodMenuList = new ArrayList<FoodMenu>();
 		List<Object> foodNamesList = Arrays.asList(foodNames);
 		foodNamesList.forEach(foodName -> {
-			foodMenuList.add(new FoodMenu((String) foodName, RandomString.make()));
+			foodMenuList.add(new FoodMenu((String) foodName, RandomString.make(), RandomString.make()));
 		});
 		try {
 			FieldUtils.writeDeclaredField(foodMenuDatabaseMockDataProvider, "foodMenuList", foodMenuList, true);

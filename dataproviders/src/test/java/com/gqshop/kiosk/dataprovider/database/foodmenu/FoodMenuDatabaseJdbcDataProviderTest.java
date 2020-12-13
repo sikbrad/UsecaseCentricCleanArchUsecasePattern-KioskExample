@@ -20,7 +20,7 @@ import com.gqshop.kiosk.core.entity.FoodMenu;
 public class FoodMenuDatabaseJdbcDataProviderTest {
 	
 	private JdbcTemplate jdbcTemplate = Mockito.mock(JdbcTemplate.class);
-	FoodMenu fakeMenu = new FoodMenu(UUID.randomUUID(), RandomString.make(), RandomString.make());	
+	FoodMenu fakeMenu = new FoodMenu(UUID.randomUUID(), RandomString.make(), RandomString.make(), RandomString.make());	
 	
 	FoodMenuDatabaseJdbcDataProvider foodMenuDatabaseJdbcDataProvider = new FoodMenuDatabaseJdbcDataProvider(jdbcTemplate);
 
@@ -48,8 +48,8 @@ public class FoodMenuDatabaseJdbcDataProviderTest {
 	
 	private List<FoodMenu> givenOneFoodMenuFound_withQuery() {
 		List<FoodMenu> allFoodMenu = new ArrayList<FoodMenu>();
-		allFoodMenu.add(new FoodMenu(fakeMenu.getName(),fakeMenu.getDescription()));
-		allFoodMenu.add(new FoodMenu(fakeMenu.getName(),fakeMenu.getDescription()));
+		allFoodMenu.add(new FoodMenu(fakeMenu.getName(),fakeMenu.getDescription(), fakeMenu.getImageUrl()));
+		allFoodMenu.add(new FoodMenu(fakeMenu.getName(),fakeMenu.getDescription(), fakeMenu.getImageUrl()));
 		when(this.jdbcTemplate.query(Mockito.anyString(),
 				ArgumentMatchers.<RowMapper<FoodMenu>>any()))
 				.thenReturn(allFoodMenu);		

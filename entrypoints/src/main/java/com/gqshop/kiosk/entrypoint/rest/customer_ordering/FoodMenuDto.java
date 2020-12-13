@@ -11,12 +11,14 @@ public class FoodMenuDto {
 	private final String id;
 	private final String name;
 	private final String description;
+	private final String imageUrl;
 	
-	public FoodMenuDto(UUID id, String name, String description) {
+	public FoodMenuDto(UUID id, String name, String description, String imageUrl) {
 		super();
 		this.id = id.toString();
 		this.name = name;
 		this.description = description;
+		this.imageUrl = imageUrl;
 	}
 
 	public String getId() {
@@ -29,6 +31,10 @@ public class FoodMenuDto {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
 	}
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -37,6 +38,11 @@ public class CustomerOrderingEntrypointWeb implements CommandLineRunner{
 		return "redirect:home";
 	}
 
+	@GetMapping("/food_menu/{foodMenuUuid}")
+	public String index(@PathVariable(required=true,name="foodMenuUuid") String foodMenuUuid, Model model) {
+		model.addAttribute("foodMenuUuid", foodMenuUuid);
+		return "food_menu";
+	}
 
 	@Override
 	public void run(String... args) throws Exception {

@@ -8,7 +8,7 @@
 	<style>
 
 		table{
-			max-width:600px;
+			max-width:400px;
 		}
 		th {
 			font-weight: 900;
@@ -31,13 +31,13 @@
 				<tr>
 					<th>Index</th>
 					<th>Name</th>
-					<th>Description</th>
-					<th>API</th>
+					<th>Detail</th>
 				</tr>
 			</thead>
 
 			<tbody>
 				<tr>
+					<td>idx</td>
 					<td>dummy name</td>
 					<td>dummy description</td>
 				</tr>
@@ -73,9 +73,8 @@
 					tbText += `
 						<tr>
 							<td>${idx + 1}</td>
-							<td>${foodMenu.name}</td>
-							<td>${foodMenu.description}</td>
-							<td><a href='${apiFoodMenu}/${foodMenu.id}'>LINK</a></td>
+							<td>${foodMenu.name}</td>							
+							<td><a href='food_menu/${foodMenu.id}'>LINK</a></td>
 						</tr>
 						`;
 				}

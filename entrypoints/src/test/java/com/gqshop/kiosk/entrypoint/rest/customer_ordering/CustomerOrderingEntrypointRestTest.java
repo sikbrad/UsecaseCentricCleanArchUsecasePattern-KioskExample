@@ -17,7 +17,7 @@ import com.gqshop.kiosk.entrypoint.rest.customer_ordering.FoodMenuDto;
 
 public class CustomerOrderingEntrypointRestTest {
 
-	FoodMenu fakeMenu1 = new FoodMenu("kimchi", "korean spicy dish");
+	FoodMenu fakeMenu1 = new FoodMenu("kimchi", "korean spicy dish", null);
 	
 	CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase = mock(CustomerOrderingGetFoodMenuUsecase.class);	
     CustomerOrderingEntrypointRest customerOrderingEntrypointRest = new CustomerOrderingEntrypointRest(customerOrderingGetFoodMenuUsecase); 

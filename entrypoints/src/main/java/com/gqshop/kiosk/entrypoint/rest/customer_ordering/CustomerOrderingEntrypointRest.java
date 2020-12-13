@@ -73,7 +73,7 @@ public class CustomerOrderingEntrypointRest implements CommandLineRunner {
 	}
 
 	private FoodMenuDto toDto(FoodMenu foodMenu) {
-		return new FoodMenuDto(foodMenu.getId(), foodMenu.getName(), foodMenu.getDescription());
+		return new FoodMenuDto(foodMenu.getId(), foodMenu.getName(), foodMenu.getDescription(), foodMenu.getImageUrl());
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.FoodMenuNotF
 
 public class CustomerOrderingGetFoodMenuUsecaseTest {
 	
-	FoodMenu fakeMenu = new FoodMenu(UUID.randomUUID(), RandomString.make(), RandomString.make());
+	FoodMenu fakeMenu = new FoodMenu(UUID.randomUUID(), RandomString.make(), RandomString.make(), RandomString.make());
 	UUID fakeUuid2 = UUID.randomUUID();
 
 	GetAllFoodMenu getAllFoodMenu = mock(GetAllFoodMenu.class);
