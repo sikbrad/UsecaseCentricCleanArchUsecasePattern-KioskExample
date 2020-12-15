@@ -1,16 +1,12 @@
 package com.gqshop.kiosk.dataprovider.database.foodmenu;
 
 import java.sql.ResultSet;
-import java.sql.Types;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.SqlParameterValue;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.GetAllFoodMenu;
@@ -56,5 +52,6 @@ public class FoodMenuDatabaseJdbcDataProvider implements GetAllFoodMenu, GetFood
 		FoodMenu foodMenu = jdbcTemplate.queryForObject(String.format("SELECT id,name,description,image_url FROM GQSHOP.FOOD_MENU WHERE name = '%s';",name), rowMapper);
 		return foodMenu;
 	}
+
 
 }

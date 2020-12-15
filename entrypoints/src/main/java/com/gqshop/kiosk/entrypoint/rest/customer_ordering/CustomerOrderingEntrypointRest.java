@@ -1,7 +1,10 @@
 package com.gqshop.kiosk.entrypoint.rest.customer_ordering;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
+
+import javax.websocket.server.PathParam;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -11,10 +14,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gqshop.kiosk.core.entity.FoodMenu;
+import com.gqshop.kiosk.core.entity.Order;
+import com.gqshop.kiosk.core.usecase.customer_ordering.create_order.CustomerOrderingCreateOrderUsecase;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.CustomerOrderingGetFoodMenuUsecase;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.FoodMenuNotFoundException;
 
@@ -24,11 +30,15 @@ public class CustomerOrderingEntrypointRest implements CommandLineRunner {
 
 	@Autowired
 	CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase;
+	
+	@Autowired
+	CustomerOrderingCreateOrderUsecase customerOrderingCreateOrderUsecase;
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public CustomerOrderingEntrypointRest(CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase) {
+	public CustomerOrderingEntrypointRest(CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase, CustomerOrderingCreateOrderUsecase customerOrderingCreateOrderUsecase) {
 		this.customerOrderingGetFoodMenuUsecase = customerOrderingGetFoodMenuUsecase;
+		this.customerOrderingCreateOrderUsecase = customerOrderingCreateOrderUsecase;
 	}
 
 	@Autowired
@@ -62,7 +72,7 @@ public class CustomerOrderingEntrypointRest implements CommandLineRunner {
 	@GetMapping(value = "/foodmenu/uuid/{id}")
 	public FoodMenuDto getFoodMenu(@PathVariable(value = "id") String id) {
 		try {
-			return toDto(customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(id));
+			return toFoodMenuDto(customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(id));
 		} catch (FoodMenuNotFoundException ee) {
 			return null;
 		}
@@ -71,18 +81,32 @@ public class CustomerOrderingEntrypointRest implements CommandLineRunner {
 	@GetMapping(value = "/foodmenu/{foodname}")
 	public FoodMenuDto getFoodMenuWithName(@PathVariable(value = "foodname") String foodname) {
 		try {
-			return toDto(customerOrderingGetFoodMenuUsecase.getFoodMenuWithName(foodname));
+			return toFoodMenuDto(customerOrderingGetFoodMenuUsecase.getFoodMenuWithName(foodname));
 		} catch (FoodMenuNotFoundException ee) {
 			return null;
 		}
 	}
-
-	private Collection<FoodMenuDto> toDto(Collection<FoodMenu> allFoodMenu) {
-		return allFoodMenu.stream().map(x -> toDto(x)).collect(Collectors.toList());
+	
+	@PostMapping(value = "/order")
+	public OrderDto createOrder(@PathParam(value ="foodid") String foodid, @PathParam(value="qty") int qty) {
+		ArrayList<FoodMenu> foodMenus = new ArrayList<FoodMenu>();
+		FoodMenu foodMenu = customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(foodid);
+		for(int idx=0;idx<qty;idx++) {
+			foodMenus.add(foodMenu);	
+		}		
+		return toOrderDto(customerOrderingCreateOrderUsecase.createOrder(foodMenus));		
 	}
 
-	private FoodMenuDto toDto(FoodMenu foodMenu) {
+	private Collection<FoodMenuDto> toDto(Collection<FoodMenu> allFoodMenu) {
+		return allFoodMenu.stream().map(x -> toFoodMenuDto(x)).collect(Collectors.toList());
+	}
+
+	private FoodMenuDto toFoodMenuDto(FoodMenu foodMenu) {
 		return new FoodMenuDto(foodMenu.getId(), foodMenu.getName(), foodMenu.getDescription(), foodMenu.getImageUrl());
+	}
+
+	private OrderDto toOrderDto(Order order) {
+		return new OrderDto(order);
 	}
 
 	@Override
