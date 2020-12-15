@@ -16,6 +16,7 @@ import com.gqshop.kiosk.core.entity.FoodMenu;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.CustomerOrderingGetFoodMenuUsecase;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.GetAllFoodMenu;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.GetFoodMenuWithId;
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.GetFoodMenuWithName;
 import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.FoodMenuNotFoundException;
 
 public class CustomerOrderingGetFoodMenuUsecaseTest {
@@ -25,8 +26,9 @@ public class CustomerOrderingGetFoodMenuUsecaseTest {
 
 	GetAllFoodMenu getAllFoodMenu = mock(GetAllFoodMenu.class);
 	GetFoodMenuWithId getFoodMenuWithId = mock(GetFoodMenuWithId.class);
+	GetFoodMenuWithName getFoodMenuWithName = mock(GetFoodMenuWithName.class);
 	CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase = new CustomerOrderingGetFoodMenuUsecase(getAllFoodMenu,
-			getFoodMenuWithId);
+			getFoodMenuWithId, getFoodMenuWithName );
 
 	@Test
 	public void returnAllFoodMenu() {
@@ -47,6 +49,33 @@ public class CustomerOrderingGetFoodMenuUsecaseTest {
 		givenNoFoodMenuFound();
 		assertThatExceptionOfType(FoodMenuNotFoundException.class)
 				.isThrownBy(() -> customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(fakeUuid2.toString()));
+	}
+	
+
+	@Test
+	public void returnsFoodMenuWithName() {
+		String foodname = fakeMenu.getName();
+		FoodMenu expected = givenFoodMenuFoundWithName(foodname);
+		FoodMenu actual = customerOrderingGetFoodMenuUsecase.getFoodMenuWithName(foodname);
+		assertThat(actual.getName()).isEqualTo(expected.getName());
+	}
+
+	private FoodMenu givenFoodMenuFoundWithName(String foodname) {
+		FoodMenu foodMenu = new FoodMenu(foodname, "", "");
+		when(getFoodMenuWithName.getWithName(foodname)).thenReturn(foodMenu);
+		return foodMenu;
+	}
+
+	@Test
+	public void errorWhenMenuIsNotFoundWithName() throws Exception {
+		String foodname = fakeMenu.getName();
+		givenNoFoodMenuFoundWithName(foodname);
+		assertThatExceptionOfType(FoodMenuNotFoundException.class)
+				.isThrownBy(() -> customerOrderingGetFoodMenuUsecase.getFoodMenuWithName(foodname));
+	}
+
+	private void givenNoFoodMenuFoundWithName(String foodname) {
+		when(getFoodMenuWithName.getWithName(foodname)).thenThrow(new FoodMenuNotFoundException());		
 	}
 
 	private Collection<FoodMenu> givenSomeFoodMenuFound() {

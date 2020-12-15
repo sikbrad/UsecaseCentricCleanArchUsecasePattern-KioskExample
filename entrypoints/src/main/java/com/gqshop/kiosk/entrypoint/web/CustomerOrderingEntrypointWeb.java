@@ -1,5 +1,9 @@
 package com.gqshop.kiosk.entrypoint.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.gqshop.kiosk.core.usecase.customer_ordering.get_foodmenu.CustomerOrderingGetFoodMenuUsecase;
+
 @Controller
 public class CustomerOrderingEntrypointWeb implements CommandLineRunner{
 
@@ -19,6 +25,9 @@ public class CustomerOrderingEntrypointWeb implements CommandLineRunner{
 	
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Autowired
+	CustomerOrderingGetFoodMenuUsecase customerOrderingGetFoodMenuUsecase;
 
 	
 	@RequestMapping("/home")
@@ -50,9 +59,19 @@ public class CustomerOrderingEntrypointWeb implements CommandLineRunner{
 		return "food_menu";
 	}
 
-	@GetMapping("/customer/food_menu/{foodMenuUuid}")
-	public String index(@PathVariable(required=true,name="foodMenuUuid") String foodMenuUuid, Model model) {
-		model.addAttribute("foodMenuUuid", foodMenuUuid);
+	@GetMapping("/customer/food_menu/{foodname}")
+	public String index(@PathVariable(required=true,name="foodname") String foodname, Model model) {
+		try {
+			foodname = URLDecoder.decode(foodname, "ASCII");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //decode to utf8(space and etc)
+		System.out.println(String.format("foodname : [%s]", foodname));
+		model.addAttribute("foodname", foodname);
+		System.out.println(String.format("foodname1 : [%s]", foodname));
+		model.addAttribute("foodMenuUuid", customerOrderingGetFoodMenuUsecase.getFoodMenuWithName(foodname).getId().toString());
+		System.out.println(String.format("foodname2 : [%s]", foodname));
 		return "food_menu_detail";
 	}
 	

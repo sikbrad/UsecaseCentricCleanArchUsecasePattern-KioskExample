@@ -6,7 +6,7 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<style>
-		img#foodMenuImage{
+		img#foodMenuImage {
 			width: 300px;
 		}
 	</style>
@@ -17,7 +17,11 @@
 	<h2 id="foodMenuName">FOOD NAME</h2>
 	<image id="foodMenuImage"></image>
 	<h5 id="foodMenuDescription">description</h5>
-	
+
+
+	<label for="quantity">Quantity</label>
+	<input type="number" id="orderQuantity" name="quantity" min="1" value="1">
+	<button type="button" class="button" id="btnOrder">ORDER</button>
 
 	<!-- <h5>dbg info</h5>
 	<p>Profile : <span th:text="${foodMenuUuid}">-POPULATE-</span></p> -->
@@ -25,45 +29,65 @@
 </body>
 
 <script>
+	var foodName = "[[${foodname}]]";
 	var foodMenuUuid = "[[${foodMenuUuid}]]";
+	var apiFoodMenu = `/api/foodmenu`;
+	var apiFoodOrder = `/api/order`;
+
 	window.onload = function () {
 		console.log("loading foodmenu..");
-		var apiFoodMenu =`/api/foodmenu/${foodMenuUuid}`; 
+
 		$.ajax({
-			url: apiFoodMenu,
+			url: `${apiFoodMenu}/uuid/${foodMenuUuid}`,
 			success: function (data) {
 
 				console.log(data)
 
 				$("#foodMenuName").text(data.name)
 				$("#foodMenuDescription").text(data.description)
-				$("#foodMenuImage").attr("src",data.imageUrl)
+				$("#foodMenuImage").attr("src", data.imageUrl)
+				$("#btnOrder").click(function () {
+					if (confirm('Order will be placed. Are you sure?')) {
+						var strDo = 'Order is being placed';
+						var orderQty = $('#orderQuantity')[0].value;
+						// OrderFood(orderQty, function () {
+						// 	console.log(strDo);
+						// 	alert(strDo);
+						// });
+						OrderFood(orderQty);
 
-				//rem all rows except for th
-				// $("#foodmenu_table tbody tr").remove();
 
-				// //populate the data
-				// var foodMenuTbody = $("#foodmenu_table tbody")[0];
-				// var foodMenuList = data;
-				// var tbText = ``;
-				// for (var idx = 0; idx < foodMenuList.length; idx++) {
-				// 	var foodMenu = foodMenuList[idx];
-				// 	console.log(foodMenu);
+					} else {
+						var strDontdo = 'Order is canceled';
+						console.log(strDontdo);
+						alert(strDontdo);
+					}
+				});
 
-				// 	tbText += `
-				// 		<tr>
-				// 			<td>${idx + 1}</td>
-				// 			<td>${foodMenu.name}</td>
-				// 			<td>${foodMenu.description}</td>
-				// 			<td><a href='food_menu/${foodMenu.id}'>LINK</a></td>
-				// 		</tr>
-				// 		`;
-				// }
-				// foodMenuTbody.innerHTML = tbText;
 
-				// console.log(data);
+			}
+		});
+	}
+
+	// function OrderFood(orderQty, succFunc){
+	// 	console.log(`orderQty: ${orderQty}`);
+	// 	succFunc();
+	// }
+	function OrderFood(orderQty) {
+		console.log(`orderQty: ${orderQty}`);
+
+		$.ajax({
+			type: "POST",
+			url: `${apiFoodOrder}?foodid=${foodMenuUuid}&qty=${orderQty}`,
+			success: function (data) {
+
+				console.log(data)
+
+				alert(`Your order number is ${JSON.stringify(data)}`);
+
 			}
 		})
+
 	}
 </script>
 

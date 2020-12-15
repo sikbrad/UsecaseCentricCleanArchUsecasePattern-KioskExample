@@ -59,10 +59,19 @@ public class CustomerOrderingEntrypointRest implements CommandLineRunner {
 		return toDto(allFoodMenu);
 	}
 
-	@GetMapping(value = "/foodmenu/{id}")
+	@GetMapping(value = "/foodmenu/uuid/{id}")
 	public FoodMenuDto getFoodMenu(@PathVariable(value = "id") String id) {
 		try {
 			return toDto(customerOrderingGetFoodMenuUsecase.getFoodMenuWithId(id));
+		} catch (FoodMenuNotFoundException ee) {
+			return null;
+		}
+	}
+	
+	@GetMapping(value = "/foodmenu/{foodname}")
+	public FoodMenuDto getFoodMenuWithName(@PathVariable(value = "foodname") String foodname) {
+		try {
+			return toDto(customerOrderingGetFoodMenuUsecase.getFoodMenuWithName(foodname));
 		} catch (FoodMenuNotFoundException ee) {
 			return null;
 		}

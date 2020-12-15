@@ -91,7 +91,7 @@ public class CustomerOrderingEntrypointRestIntegrationTest {
 		
 		List<String> foodMenuIds = foodMenuDatabaseMockDataProvider.getAll().stream().map(x->x.getId().toString()).collect(Collectors.toList());
 		
-		mvc.perform(MockMvcRequestBuilders.get(String.format("%s/foodmenu/%s", apiUrl, foodMenuIds.get(1)))).andDo(print())
+		mvc.perform(MockMvcRequestBuilders.get(String.format("%s/foodmenu/uuid/%s", apiUrl, foodMenuIds.get(1)))).andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(foodMenuIds.get(1))));
