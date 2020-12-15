@@ -38,8 +38,9 @@ public class StaffServingGetOrderUsecaseTest {
 
 	private Collection<Order> givenSomeRecivedOrdersFound() {
 		Collection<Order> expected = new ArrayList<Order>();
-		expected.add(new Order(UUID.fromString(fakeUserId),OrderStatus.ORDER_RECEIVED,1));
-		expected.add(new Order(UUID.fromString(fakeUserId),OrderStatus.ORDER_RECEIVED,2));
+		Collection<FoodMenu> fakeFoodMenus = new ArrayList<FoodMenu>();
+		fakeFoodMenus.add(fakeMenu);
+		expected.add(new Order(UUID.fromString(fakeUserId), fakeFoodMenus));
 		when(getReceivedOrders.getReceivedOrders()).thenReturn(expected);
 		return expected;
 	}
